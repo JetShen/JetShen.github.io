@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import {ReactIcon, RustIcon, CSSIcon, PostgresIcon, SQLIcon, TauriIcon}  from '@/app/components/svg/icons';
+import { ReactIcon, RustIcon, CSSIcon, PostgresIcon, SQLIcon, TauriIcon, GitHubIcon } from '@/app/components/svg/icons';
 
 const carouselBG = [
   { src: 'bg-1.png', name: 'Inicio', info: 'Seccion para publicar y ver post de usuarios' },
@@ -14,6 +14,22 @@ const carouselLibrary = [
   { src: 'library-2.png', name: 'Generar Prestamo', info: 'Verificar e insertar los datos junto a una imagen del Libro' },
   { src: 'library-3.png', name: 'Buscar Prestamo', info: 'Buscar codigo unico de usuario/libro' },
 ];
+
+function ProjectLink({ name }: { name: string }) {
+  console.log(name);
+  const lowerName = name.toLowerCase();
+  switch (true) {
+    case lowerName.includes('bg social media'):
+      return <a href="https://github.com/JetShen/BG"><GitHubIcon color="#eab308" size={30} /></a>
+    case lowerName.includes('library app'):
+      return <a href="https://github.com/JetShen/Library"><GitHubIcon color="#22c55e" size={30} /></a>
+    default:
+      return <a href="https://github.com/JetShen/BG"><GitHubIcon color="#eab308" size={30} /></a>
+  }
+
+
+}
+
 
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -45,21 +61,33 @@ export default function Home() {
     <main className="bg-primary text-textPrimary min-h-screen p-4 sm:p-8 overflow-hidden">
       {/* Background shapes */}
       <div className='bg-blue-700 w-[200px] h-[150px] sm:w-[590px] sm:h-[400px] rounded-[100%] 
-                          absolute z-[0] top-[20%] left-[20%] translate-x-[-50%] translate-y-[50%] blur-[50px] sm:blur-[90px] '></div>
+                absolute z-[0] top-[20%] left-[20%] translate-x-[-50%] translate-y-[50%] blur-[50px] sm:blur-[90px]'></div>
       <div className='bg-purple-800 w-[200px] h-[150px] sm:w-[590px] sm:h-[400px] rounded-[100%] 
                           absolute z-[0] top-[40%] left-[80%] translate-x-[-100%] translate-y-[50%] blur-[50px] sm:blur-[90px] '></div>
-      
-      <div className="sm:px-8 mt-16 sm:mt-32">
+
+      <div className="sm:px-4 mt-8 sm:mt-10">
         <div className="mx-auto max-w-7xl lg:px-9 text-center">
           <h1 className="text-2xl sm:text-4xl font-bold">Fernando Thiele</h1>
-          <p className="text-lg sm:text-xl mt-4 text-textSecondary">Programador con interés en el desarrollo BackEnd</p>
+          <span id='occupation' className="text-lg sm:text-xl text-textSecondary">Desarrollador BackEnd</span>
+          <br />
+          <span id='status' className='inline-block px-3 py-1 bg-green-500 text-black text-sm font-semibold rounded-full'>Disponible para Trabajar</span>
+          <p className="text-lg sm:text-xl mt-4 text-textSecondary">
+            Soy un programador apasionado por el desarrollo <span className="text-blue-500 font-semibold">BackEnd</span> con experiencia en
+            <span className="text-yellow-500 font-semibold"> Rust</span>, <span className="text-yellow-500 font-semibold">Node.js</span> y bases de datos como
+            <span className="text-yellow-500 font-semibold"> PostgreSQL</span>. He trabajado en proyectos como una aplicación de biblioteca automatizada y un clon de redes sociales, enfocados en la
+            <span className="text-green-500 font-semibold"> optimización del rendimiento</span> y la
+            <span className="text-green-500 font-semibold"> escalabilidad</span>. Mi motivación principal es resolver problemas complejos de infraestructura y mejorar la eficiencia de los sistemas.
+          </p>
         </div>
       </div>
 
       <div className="sm:px-8 mt-16 md:mt-20">
         <div className="mx-auto max-w-8xl lg:px-8">
           <div className='flex flex-col sm:flex-row justify-around text-center sm:text-left'>
-            <h1 className='text-xl sm:text-2xl font-bold'>Proyecto: {projectName}</h1>
+          <span className='font-bold z-[10] relative flex items-center'>
+            <h1 className='text-xl sm:text-2xl mr-2'>Proyecto: {projectName}</h1>
+            <ProjectLink name={projectName} />
+          </span>
             <h1 className='text-xl sm:text-2xl font-bold'>Proyectos</h1>
           </div>
           <div className="flex flex-col sm:flex-row mt-8 space-y-6 sm:space-y-0 sm:space-x-9">
@@ -181,8 +209,8 @@ export default function Home() {
 
       <div className="sm:px-8 mt-24 md:mt-28 z-[2]">
         <div className="mx-auto max-w-7xl lg:px-8 ">
-        
-          <h2 className="text-2xl sm:text-3xl font-bold text-center">Frameworks and Tools</h2>
+
+          <h2 className="text-xl sm:text-4xl font-bold z-[10] text-center">Frameworks and Tools</h2>
           <div className="flex justify-center mt-8 space-x-4">
             <div className="bg-cardBackground p-4 rounded-lg w-20 h-20 sm:w-28 sm:h-28 flex items-center justify-center">
               <ReactIcon color="#FFFFFF" size={50} />
@@ -203,13 +231,13 @@ export default function Home() {
               <TauriIcon color="#FFFFFF" size={50} />
             </div>
 
-            
+
           </div>
           <div className='bg-cyan-500 w-[2100px] h-[100px] rounded-[100%]
                           relative left-[50%] translate-x-[-50%] translate-y-[100%] blur-[90px] '></div>
         </div>
       </div>
-      
+
     </main>
   );
 }
