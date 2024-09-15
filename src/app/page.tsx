@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { ReactIcon, RustIcon, CSSIcon, PostgresIcon, SQLIcon, TauriIcon, GitHubIcon } from '@/app/components/svg/icons';
+import Project from './components/carousel';
 
 const carouselBG = [
   { src: 'bg-1.png', name: 'Inicio', info: 'Seccion para publicar y ver post de usuarios' },
@@ -15,6 +16,10 @@ const carouselLibrary = [
   { src: 'library-3.png', name: 'Buscar Prestamo', info: 'Buscar codigo unico de usuario/libro' },
 ];
 
+const carouselElowMP = [
+  { src: 'demo.mp4', name: 'Prubea de Funciones', info: 'Busqueda y Reproduccion de audio' },
+] 
+
 function ProjectLink({ name }: { name: string }) {
   console.log(name);
   const lowerName = name.toLowerCase();
@@ -23,6 +28,8 @@ function ProjectLink({ name }: { name: string }) {
       return <a href="https://github.com/JetShen/BG"><GitHubIcon color="#eab308" size={30} /></a>
     case lowerName.includes('library app'):
       return <a href="https://github.com/JetShen/Library"><GitHubIcon color="#22c55e" size={30} /></a>
+    case lowerName.includes('elowmp'):
+      return <a href="https://github.com/JetShen/ELowMP"><GitHubIcon color="#eab308" size={30} /></a>
     default:
       return <a href="https://github.com/JetShen/BG"><GitHubIcon color="#eab308" size={30} /></a>
   }
@@ -35,7 +42,7 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [carouselImages, setCarouselImages] = useState(carouselBG);
   const [projectName, setProjectName] = useState('BG Social Media');
-  const [selectedProject, setSelectedProject] = useState<string | null>('BG');
+  const [selectedProject, setSelectedProject] = useState<string>('BG');
 
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + carouselImages.length) % carouselImages.length);
@@ -54,6 +61,9 @@ export default function Home() {
     } else if (name === 'Library') {
       setCarouselImages(carouselLibrary);
       setProjectName('Library App');
+    } else if (name === 'ELowMP') {
+      setCarouselImages(carouselElowMP);
+      setProjectName('ELowMP');
     }
   };
 
@@ -115,8 +125,8 @@ export default function Home() {
                     data-twe-carousel-item
                     style={{ backfaceVisibility: 'hidden' }}
                   >
-                    <img src={image.src} className="block w-full" alt={`Slide ${index + 1}`} />
-                    <div className="absolute bottom-5 hidden py-5 text-center text-white md:block w-full bg-opacity-70 bg-black">
+                    {image.src.includes('.mp4') ? <video src={image.src} controls autoPlay loop className="w-full h-full object-cover rounded" /> : <img src={image.src} alt="Project" className="w-full h-full object-cover rounded" />}
+                    <div className="absolute bottom-5 hidden py-4 text-center text-white md:block w-full bg-opacity-70 bg-black">
                       <h5 className="text-xl">{image.name}</h5>
                       <p>{image.info}</p>
                     </div>
@@ -170,37 +180,9 @@ export default function Home() {
             {/* List of Projects Section */}
             <div className="z-[2] w-full sm:w-2/5 h-[calc(85vh-320px)] overflow-y-scroll no-scrollbar">
               <div className="flex flex-col gap-5 p-4">
-                <div className={`border-2 ${selectedProject === 'BG' ? 'neon' : 'border-gray-500'} 
-                          hover:shadow-lg group rounded-2xl cursor-pointer relative 
-                          transition duration-300 
-                          z-[2]
-                           h-40 sm:h-80 lg:col-span-3`} onClick={() => selectCarousel('BG')}>
-                  <img src="bg-3.png" alt="Project" className="w-full h-full object-cover rounded" />
-                  <div className='absolute bottom-5 hidden py-5 text-center text-white md:block w-full bg-opacity-70 bg-black'>
-                    <h5 className="text-xl">Red Social Clon de Twitter</h5>
-                    <div className='flex text-center justify-center flex-row gap-1 '>
-                      <ReactIcon color="#ffffff" size={30} />
-                      <CSSIcon color="#ffffff" size={30} />
-                      <PostgresIcon color="#ffffff" size={30} />
-                    </div>
-                  </div>
-                </div>
-                <div className={`border-2 ${selectedProject === 'Library' ? 'neon' : 'border-gray-500'} 
-                          hover:shadow-lg group rounded-2xl cursor-pointer relative
-                          transition duration-300
-                          z-[2]
-                           h-40 sm:h-80 lg:col-span-3`} onClick={() => selectCarousel('Library')}>
-                  <img src="library-1.png" alt="Project" className="w-full h-full object-cover rounded" />
-                  <div className='absolute bottom-5 hidden py-5 text-center text-white md:block w-full bg-opacity-70 bg-black'>
-                    <h5 className="text-xl">Aplicacion para Biblioteca</h5>
-                    <p className='flex text-center justify-center flex-row gap-1 '>
-                      <RustIcon color="#ffffff" size={30} />
-                      <SQLIcon color="#ffffff" size={30} />
-                      <TauriIcon color="#ffffff" size={30} />
-                      <ReactIcon color="#ffffff" size={30} />
-                    </p>
-                  </div>
-                </div>
+                <Project src="bg-3.png" tools={['react', 'css', 'postgres']} details="Red Social Clon de Twitter" tittle="BG" seleted={selectedProject} selectCarousel={selectCarousel} />
+                <Project src="library-1.png" tools={['rust', 'sql', 'tauri', 'react']} details="Aplicacion para Biblioteca" tittle="Library" seleted={selectedProject} selectCarousel={selectCarousel} />
+                <Project src="ElowSearch.png" tools={['electron', 'react']} details="Aplicacion de Musica"  tittle="ELowMP" seleted={selectedProject} selectCarousel={selectCarousel} />
               </div>
             </div>
           </div>
